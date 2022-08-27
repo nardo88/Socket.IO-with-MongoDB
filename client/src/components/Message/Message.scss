@@ -1,36 +1,60 @@
-.message{
-    display: flex;
-    align-items: flex-end;
-    padding: 5px 10px;
-    margin-bottom: 25px;
-    max-width: 400px;
+@import '../../styles/_variables.scss';
 
-    &__avatar{
-        img{
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-        margin-right: 12px;
-        margin-bottom: 22px;
-    }
+.message {
+  display: flex;
+  align-items: flex-end;
+  padding: 5px 10px;
+  margin-bottom: 25px;
+  max-width: 400px;
 
-    &__buble {
-        background: #3243ff;
-        border-radius: 8px 8px 8px 0;
-        padding: 10px;
-    }
+  &--isme {
+    flex-direction: row-reverse;
+    margin-left: auto;
 
-    &__text{
-        font-size: 14px;
-        color: #fff;
-        padding: 0;
-        margin: 0;
-        line-height: 18px;
+    .message__avatar {
+      margin-left: 12px;
+      margin-right: 0;
     }
+  }
 
-    &__date{
-        font-size: 12px;
-        color: gray;
+  &__avatar {
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
     }
+    margin-right: 12px;
+    margin-bottom: 26px;
+  }
+
+  &__buble {
+    &--isme {
+      background: #ffffff;
+      border: 1px solid #60bdff;
+      border-radius: 8px 8px 0 8px;
+      padding: 10px;
+
+      p {
+        color: #202020;
+      }
+    }
+    &--notme {
+      background: $blue;
+      border-radius: 8px 8px 8px 0;
+      padding: 10px;
+    }
+  }
+
+  &__text {
+    font-size: 14px;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    line-height: 18px;
+  }
+
+  &__date {
+    font-size: 12px;
+    color: gray;
+  }
 }

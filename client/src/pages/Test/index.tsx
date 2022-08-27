@@ -17,8 +17,9 @@ const Test = () => {
     <div className="wrapper">
       <Message {...message} />
 
-      <Message {...message} isMe={true} />
+      <Message {...message} isMe={true} isRead={true} />
       <Message {...message} />
+      <Message {...message} isMe={true} isRead={false} />
     </div>
   )
 }
