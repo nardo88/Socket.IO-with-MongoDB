@@ -16,6 +16,8 @@ const Test = () => {
   return (
     <div className="wrapper">
       <Message {...message} />
+
+      <Message {...message} isMe={true} />
       <Message {...message} />
     </div>
   )

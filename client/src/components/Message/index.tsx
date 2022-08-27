@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import './Message.scss'
-import вфноы from 'dayjs'
 import dayjs from 'dayjs'
 
 interface MessageProps {
