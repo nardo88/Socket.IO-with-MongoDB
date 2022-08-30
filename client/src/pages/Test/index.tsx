@@ -26,7 +26,10 @@ const Test = () => {
       <Message {...message} isMe={true} isRead={true} />
       <Message {...message} />
       <Message
-        {...message}
+        user={message.user}
+        avatar={message.avatar}
+        date={message.date}
+        content={message.content}
         isMe={true}
         isRead={false}
         attachments={[
@@ -34,6 +37,26 @@ const Test = () => {
           { filename: 'Node', url: url2 },
           { filename: 'TypeScript', url: url3 },
         ]}
+      />
+
+      {/* isTyping */}
+      <Message
+        user={message.user}
+        avatar={message.avatar}
+        isTyping={true}
+        content={null}
+        isMe={false}
+      />
+
+      {/* one image */}
+      <Message
+        user={message.user}
+        avatar={message.avatar}
+        date={message.date}
+        content={null}
+        isMe={false}
+        isRead={false}
+        attachments={[{ filename: 'React1', url: url1 }]}
       />
     </div>
   )

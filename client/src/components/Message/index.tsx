@@ -13,12 +13,13 @@ interface MessageProps {
   user: {
     fullName: string
   }
-  avatar: string
-  date: string | number
-  content: string
+  avatar?: string
+  date?: string | number
+  content: string | null
   isMe?: boolean
   isRead?: boolean
   attachments?: FileType[]
+  isTyping?: boolean
 }
 
 const Message: FC<MessageProps> = ({
@@ -29,6 +30,7 @@ const Message: FC<MessageProps> = ({
   user,
   isRead,
   attachments,
+  isTyping,
 }) => {
   return (
     <div className={`message ${isMe ? 'message--isme' : ''}`}>
@@ -36,14 +38,29 @@ const Message: FC<MessageProps> = ({
         <img src={avatar} alt="" />
       </div>
       <div className="message__content">
-        <div
-          className={isMe ? 'message__buble--isme' : 'message__buble--notme'}>
-          <p className="message__text">{content}</p>
-        </div>
+        {content && (
+          <div
+            className={isMe ? 'message__buble--isme' : 'message__buble--notme'}>
+            <p className="message__text">{content}</p>
+          </div>
+        )}
+        {isTyping && (
+          <div className="message__typing">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        )}
         {attachments && (
           <div className="message__images">
             {attachments.map((item: FileType) => (
-              <div className="message__image" key={item.url}>
+              <div
+                className={
+                  attachments.length === 1
+                    ? 'message__image--one'
+                    : 'message__image'
+                }
+                key={item.url}>
                 <img src={item.url} alt={item.filename} />
               </div>
             ))}
@@ -51,9 +68,11 @@ const Message: FC<MessageProps> = ({
         )}
         <div className="df aic mt4">
           {isMe && <span> {isRead ? <ReadIcon /> : <NotReadIcon />}</span>}
-          <span className={`message__date ${isMe && 'ml8'}`}>
-            {dayjs(date).format('DD.MM.YYYY')}
-          </span>
+          {date && (
+            <span className={`message__date ${isMe && 'ml8'}`}>
+              {dayjs(date).format('DD.MM.YYYY')}
+            </span>
+          )}
         </div>
       </div>
     </div>
