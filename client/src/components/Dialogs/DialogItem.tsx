@@ -1,36 +1,60 @@
+import { FC } from 'react'
 import NotReadIcon from '../icons/NotRead'
 import ReadIcon from '../icons/Read'
 import './DialogItem.scss'
 
-const avatar =
-  'https://sun1-30.userapi.com/s/v1/ig2/IQg8pIe0OhB375-ioMb5ufiE1kbyM1btJik63fR4rKcXKAMSW9AvJdwE9uUY0cNq75YYxBuZY3199thmDQrWYnKI.jpg?size=100x100&quality=96&crop=86,86,689,689&ava=1'
+import dayjs from 'dayjs'
+const isToday = require('dayjs/plugin/isToday')
+dayjs.extend(isToday)
 
 const online = true
-const isMe = true
-const isRead = false
 const count = 5
 
-const DialogItem = () => {
+interface DialogItemProps {
+  isMe: boolean
+  user: {
+    fullName: string
+    avatar: null | string
+  }
+  text: string
+  isReaded: boolean
+  createdAt: number
+}
+
+const getDate = (createdAt: number) =>
+  // @ts-ignore
+  dayjs(createdAt).isToday()
+    ? dayjs(createdAt).format('HH:mm')
+    : dayjs(createdAt).format('DD.mm.YYYY')
+
+const DialogItem: FC<DialogItemProps> = ({
+  isMe,
+  user,
+  text,
+  isReaded,
+  createdAt,
+}) => {
   return (
     <div className="dialog__item">
       <div
         className={`dialog__item--avatar ${
           online ? 'dialog__item--avatar-online' : ''
         }`}>
-        <img src={avatar} alt="" />
+        {user.avatar ? (
+          <img src={user.avatar} alt="" />
+        ) : (
+          <div className="dialog__item--empty-avatar"></div>
+        )}
       </div>
       <div className="dialog__item--info info">
         <div className="info__top">
-          <b>{'Александр Пушкин'}</b>
-          <div className="info__date">13:30</div>
+          <b>{user.fullName}</b>
+          <div className="info__date">{getDate(createdAt)}</div>
         </div>
         <div className="info__bottom">
-          <p className="info__message">
-            Далеко-далеко за словесными горами в стране гласных и согласных
-            живут рыбные тексты. Маленький живет то послушавшись дорогу?
-          </p>
+          <p className="info__message">{text}</p>
           {isMe ? (
-            <span> {isRead ? <ReadIcon /> : <NotReadIcon />}</span>
+            <span> {isReaded ? <ReadIcon /> : <NotReadIcon />}</span>
           ) : (
             <span className="info__message--count">{count}</span>
           )}
