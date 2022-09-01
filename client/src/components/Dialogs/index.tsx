@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import DialogItem from './DialogItem'
 
-interface DialogItem {
+interface DialogItemProps {
   items: any
   ownerId: string
 }
 
-const Dialogs: FC<DialogItem> = ({ items, ownerId }) => {
+const Dialogs: FC<DialogItemProps> = ({ items, ownerId }) => {
   return (
     <div>
       {items.map((item: any) => (
@@ -17,6 +17,7 @@ const Dialogs: FC<DialogItem> = ({ items, ownerId }) => {
           text={item.text}
           isReaded={item.isReaded}
           createdAt={item.createdAt}
+          count={item.count}
         />
       ))}
     </div>

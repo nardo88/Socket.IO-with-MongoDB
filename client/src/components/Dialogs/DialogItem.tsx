@@ -7,18 +7,18 @@ import dayjs from 'dayjs'
 const isToday = require('dayjs/plugin/isToday')
 dayjs.extend(isToday)
 
-const online = true
-const count = 5
-
 interface DialogItemProps {
   isMe: boolean
   user: {
     fullName: string
     avatar: null | string
+    _id: string
+    isOnline: boolean
   }
   text: string
   isReaded: boolean
   createdAt: number
+  count: number
 }
 
 const getDate = (createdAt: number) =>
@@ -33,12 +33,13 @@ const DialogItem: FC<DialogItemProps> = ({
   text,
   isReaded,
   createdAt,
+  count,
 }) => {
   return (
     <div className="dialog__item">
       <div
         className={`dialog__item--avatar ${
-          online ? 'dialog__item--avatar-online' : ''
+          user.isOnline ? 'dialog__item--avatar-online' : ''
         }`}>
         {user.avatar ? (
           <img src={user.avatar} alt="" />
