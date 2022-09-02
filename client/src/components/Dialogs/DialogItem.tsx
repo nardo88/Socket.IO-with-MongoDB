@@ -36,18 +36,18 @@ const DialogItem: FC<DialogItemProps> = ({
   count,
 }) => {
   return (
-    <div className="dialog__item">
+    <div className="dialog">
       <div
-        className={`dialog__item--avatar ${
-          user.isOnline ? 'dialog__item--avatar-online' : ''
+        className={`dialog__avatar ${
+          user.isOnline ? 'dialog__avatar--online' : ''
         }`}>
         {user.avatar ? (
           <img src={user.avatar} alt="" />
         ) : (
-          <div className="dialog__item--empty-avatar"></div>
+          <div className="dialog__empty-avatar"></div>
         )}
       </div>
-      <div className="dialog__item--info info">
+      <div className="dialog__info info">
         <div className="info__top">
           <b>{user.fullName}</b>
           <div className="info__date">{getDate(createdAt)}</div>
