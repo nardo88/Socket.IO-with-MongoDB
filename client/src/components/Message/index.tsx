@@ -1,8 +1,13 @@
-import { FC } from 'react'
+import { FC, useState, useRef, useEffect } from 'react'
 import './Message.scss'
 import dayjs from 'dayjs'
 import ReadIcon from '../icons/Read'
 import NotReadIcon from '../icons/NotRead'
+import AudioIcon from '../icons/Audio'
+import PauseIcon from '../icons/PauseIcon'
+import PlayIcon from '../icons/PlayIcon'
+// @ts-ignore
+import audioFile from '../../assets/audio.mp3'
 
 interface FileType {
   filename: string
@@ -20,6 +25,7 @@ interface MessageProps {
   isRead?: boolean
   attachments?: FileType[]
   isTyping?: boolean
+  audio?: string
 }
 
 const Message: FC<MessageProps> = ({
@@ -27,11 +33,27 @@ const Message: FC<MessageProps> = ({
   content,
   date,
   isMe,
-  user,
   isRead,
   attachments,
   isTyping,
+  audio,
 }) => {
+
+  const [isPlay, setIsPlay] = useState(false)
+  const ref = useRef<HTMLAudioElement>(null)
+
+  const togglePlay = () => {
+    setIsPlay(!isPlay)
+  }
+
+  useEffect(() => {
+    if(isPlay){
+      ref.current?.play()
+    }else {
+      ref.current?.pause()
+    }
+  }, [isPlay])
+
   return (
     <div className={`message ${isMe ? 'message--isme' : ''}`}>
       <div className="message__avatar">
@@ -42,6 +64,19 @@ const Message: FC<MessageProps> = ({
           <div
             className={isMe ? 'message__buble--isme' : 'message__buble--notme'}>
             <p className="message__text">{content}</p>
+          </div>
+        )}
+        {audio && (
+          <div className="message__audio audio">
+            <div className="audio__progress" style={{width: '30%'}}></div>
+            <div className="audio__info">
+              <div className="audio__control">
+                <button className='audio__btn' onClick={togglePlay}>{ isPlay ? <PauseIcon/> : <PlayIcon />}</button>
+              </div>
+              <audio ref={ref} src={audioFile} preload="auto" />
+              <AudioIcon />
+              <span className="audio__duration">02:15</span>
+            </div>
           </div>
         )}
         {isTyping && (

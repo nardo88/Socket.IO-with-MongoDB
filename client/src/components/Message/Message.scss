@@ -30,7 +30,7 @@
   &__buble {
     &--isme {
       background: #ffffff;
-      border: 1px solid #60bdff;
+      border: 1px solid $lightblue;
       border-radius: 8px 8px 0 8px;
       padding: 10px;
 
@@ -127,5 +127,57 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+
+.audio{
+  width: 250px;
+  background: $blue;
+  position:  relative;
+  border-radius: 8px 8px 8px 0;
+  overflow: hidden;
+
+  &__progress{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: $lightblue;
+    z-index: 5;
+  }
+
+  &__info{
+    display: flex;
+    position: relative;
+    z-index: 10;
+    padding: 10px 0;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  &__duration{
+    font-style: 16px;
+    color: $white;
+    font-weight: 500;
+    opacity: .5;
+  }
+
+  &__btn{
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $blue;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    & > svg{
+      width: 8px;
+      height: 8px;
+    }
   }
 }
