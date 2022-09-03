@@ -1,0 +1,15 @@
+.avatar {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &--symbol {
+      color: #fff;
+      text-align: center;
+      font-weight: 600;
+      line-height: 38px;
+      font-size: 18px;
+    }
+  }

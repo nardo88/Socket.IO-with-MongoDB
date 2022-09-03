@@ -6,6 +6,7 @@ import NotReadIcon from '../icons/NotRead'
 import AudioIcon from '../icons/Audio'
 import PauseIcon from '../icons/PauseIcon'
 import PlayIcon from '../icons/PlayIcon'
+import Avatar from '../Avatar'
 
 interface FileType {
   filename: string
@@ -14,9 +15,12 @@ interface FileType {
 
 interface MessageProps {
   user: {
+    _id: string
     fullName: string
+    avatar: string | null | undefined
+
   }
-  avatar?: string
+  avatar?: string | null
   date?: string | number
   content: string | null
   isMe?: boolean
@@ -41,6 +45,7 @@ const Message: FC<MessageProps> = ({
   attachments,
   isTyping,
   audio,
+  user
 }) => {
   const [isPlay, setIsPlay] = useState(false)
   const ref = useRef<HTMLAudioElement>(null) as any
@@ -92,7 +97,7 @@ const Message: FC<MessageProps> = ({
   return (
     <div className={`message ${isMe ? 'message--isme' : ''}`}>
       <div className="message__avatar">
-        <img src={avatar} alt="" />
+        <Avatar user={user} />
       </div>
       <div className="message__content">
         {content && (

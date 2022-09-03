@@ -8,16 +8,18 @@ const Test = () => {
   return (
     <div className="wrapper">
       <Message 
-        user={{fullName: 'Иван Пупкин'}}
+        user={{
+          _id: 'I7hIaRORK8CM73x0',
+          fullName: 'Иван Пупкин', 
+          avatar: null
+        }}
         content={'Привет! как дела?'} 
-        avatar={avatar}
         isMe={false}
         date={'2022.09.02: 21:21'}
       />
       <Message 
-        user={{fullName: 'Иван Пупкин'}}
+        user={{_id: 'VQaigeIu0deS0Myd', fullName: 'Иван Пупкин', avatar}}
         content={null} 
-        avatar={avatar}
         isMe={false}
         audio={audioFile}
         date={'2022.09.02: 21:21'}
