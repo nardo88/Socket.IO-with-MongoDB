@@ -6,8 +6,6 @@ import NotReadIcon from '../icons/NotRead'
 import AudioIcon from '../icons/Audio'
 import PauseIcon from '../icons/PauseIcon'
 import PlayIcon from '../icons/PlayIcon'
-// @ts-ignore
-import audioFile from '../../assets/audio.mp3'
 
 interface FileType {
   filename: string
@@ -25,7 +23,13 @@ interface MessageProps {
   isRead?: boolean
   attachments?: FileType[]
   isTyping?: boolean
-  audio?: string
+  audio?: string | null | undefined
+}
+
+const convertCurrentTime = (number: number) => {
+  const mins = Math.floor(number / 60)
+  const secs = (number % 60).toFixed()
+  return `${mins < 10 ? '0' : ''}${mins}:${Number(secs) < 10 ? '0' : ''}${secs}`
 }
 
 const Message: FC<MessageProps> = ({
@@ -38,21 +42,52 @@ const Message: FC<MessageProps> = ({
   isTyping,
   audio,
 }) => {
-
   const [isPlay, setIsPlay] = useState(false)
-  const ref = useRef<HTMLAudioElement>(null)
+  const ref = useRef<HTMLAudioElement>(null) as any
+  const [progress, setProgress] = useState(0)
+  const [currentTime, setCurrentTime] = useState(0)
 
   const togglePlay = () => {
-    setIsPlay(!isPlay)
+    if (!isPlay) {
+      ref.current?.play()
+    } else {
+      ref.current?.pause()
+    }
   }
 
   useEffect(() => {
-    if(isPlay){
-      ref.current?.play()
-    }else {
-      ref.current?.pause()
+    if (audio) {
+      ref.current?.addEventListener(
+        'playing',
+        () => {
+          setIsPlay(true)
+        },
+        false
+      )
+
+      ref.current?.addEventListener(
+        'ended',
+        () => {
+          setIsPlay(false)
+        },
+        false
+      )
+
+      ref.current?.addEventListener(
+        'pause',
+        () => {
+          setIsPlay(false)
+        },
+        false
+      )
+
+      ref.current?.addEventListener('timeupdate', () => {
+        const duration = (ref.current && ref.current?.duration) || 0
+        setCurrentTime(ref.current?.currentTime)
+        setProgress((ref.current?.currentTime / duration) * 100)
+      })
     }
-  }, [isPlay])
+  }, [audio])
 
   return (
     <div className={`message ${isMe ? 'message--isme' : ''}`}>
@@ -68,14 +103,20 @@ const Message: FC<MessageProps> = ({
         )}
         {audio && (
           <div className="message__audio audio">
-            <div className="audio__progress" style={{width: '30%'}}></div>
+            <div
+              className="audio__progress"
+              style={{ width: `${progress}%` }}></div>
             <div className="audio__info">
               <div className="audio__control">
-                <button className='audio__btn' onClick={togglePlay}>{ isPlay ? <PauseIcon/> : <PlayIcon />}</button>
+                <button className="audio__btn" onClick={togglePlay}>
+                  {isPlay ? <PauseIcon /> : <PlayIcon />}
+                </button>
               </div>
-              <audio ref={ref} src={audioFile} preload="auto" />
+              <audio ref={ref} src={audio} preload="auto" />
               <AudioIcon />
-              <span className="audio__duration">02:15</span>
+              <span className="audio__duration">
+                {convertCurrentTime(currentTime)}
+              </span>
             </div>
           </div>
         )}
