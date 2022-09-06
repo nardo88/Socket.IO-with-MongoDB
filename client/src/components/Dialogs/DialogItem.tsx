@@ -44,7 +44,7 @@ const DialogItem: FC<DialogItemProps> = ({
         {user.avatar ? (
           <img src={user.avatar} alt="" />
         ) : (
-          <div className="dialog__empty-avatar"></div>
+          <div className="dialog__empty-avatar">{user.fullName.slice(0,1)}</div>
         )}
       </div>
       <div className="dialog__info info">

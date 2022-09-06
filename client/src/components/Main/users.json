@@ -1,0 +1,40 @@
+[{
+        "user": {
+            "fullName": "Кузнецов Максим",
+            "avatar": "https://texterra.ru/upload/img/23-12-2019/1/5.jpg",
+            "_id": "XWQ8b0zYB75IMn4G",
+            "isOnline": true
+        },
+        "text": "Привет как дела?",
+        "isReaded": false,
+        "createdAt": 1662483215000,
+        "count": 3,
+        "_id": "AJjn3GCByu0yxyA1"
+    },
+    {
+        "user": {
+            "fullName": "Alex Flow",
+            "avatar": "https://promdevelop.com/wp-content/uploads/2021/06/reshenie_dzerzhinskogo_rajonnogo_suda.jpg",
+            "_id": "pWgc6h5DoBrztHIA",
+            "isOnline": false
+        },
+        "text": "Записал тебя на вебинар посвященному оптимизации React приложений",
+        "isReaded": true,
+        "createdAt": 1662483215000,
+        "count": 3,
+        "_id": "Sz5Uuz89xZoS3qS5"
+    },
+    {
+        "user": {
+            "fullName": "Гарик Васкин",
+            "avatar": null,
+            "_id": "EWmE2MJFPGU2thO3",
+            "isOnline": false
+        },
+        "text": "Завтра созвон в 14,00",
+        "isReaded": true,
+        "createdAt": 1662483215000,
+        "count": 3,
+        "_id": "HgzOn3aWUuwVjo7m"
+    }
+]
