@@ -1,0 +1,84 @@
+[{
+        "content": "Привет! как дела?",
+        "date": "2022.09.02: 21:21",
+        "user": {
+            "_id": "VQaigeIu0deS0Myd",
+            "fullName": "Иван Пупкин",
+            "avatar": "https://texterra.ru/upload/img/23-12-2019/1/5.jpg"
+        },
+        "_id": "TYFrTwlUaPIO0diE"
+    },
+    {
+        "content": "Привет! Да все норм. Как сам?",
+        "date": "2022.09.02: 21:21",
+        "user": {
+            "_id": "EWmE2MJFPGU2thO3",
+            "fullName": "Иван Пупкин",
+            "avatar": "https://texterra.ru/upload/img/23-12-2019/1/5.jpg"
+        },
+        "_id": "6HckjUJNY7rb6w9C"
+    },
+    {
+        "content": "Далеко-далеко за словесными, горами в стране гласных и согласных живут рыбные тексты. Лучше запятой до имеет сбить вершину, языкового своего бросил своих живет собрал lorem города проектах алфавит что возвращайся вдали не ее? Пунктуация обеспечивает продолжил текстов текст на берегу безопасную вдали имени которой грамматики журчит снова силуэт буквоград, своих коварных власти послушавшись?",
+        "date": "2022.09.02: 21:21",
+        "user": {
+            "_id": "VQaigeIu0deS0Myd",
+            "fullName": "Иван Пупкин",
+            "avatar": "https://texterra.ru/upload/img/23-12-2019/1/5.jpg"
+        },
+        "_id": "qWmUmL0YgEtoAKa1"
+
+    },
+    {
+        "content": "Зацени новые фотки",
+        "attachments": [
+            {
+                "filename": "string",
+                "url": "https://ext-marketing.com/wp-content/uploads/2019/12/iStock-1075599562.jpg"
+            },
+            {
+                "filename": "string",
+                "url": "https://taganrogprav.ru/wp-content/uploads/2022/02/11111-2.jpg"
+            },
+            {
+                "filename": "string",
+                "url": "https://assets.entrepreneur.com/content/3x2/2000/20170921221322-GettyImages-515057138.jpeg"
+            }
+        ],
+        "date": "2022.09.02: 21:21",
+        "user": {
+            "_id": "EWmE2MJFPGU2thO3",
+            "fullName": "Иван Пупкин",
+            "avatar": "https://texterra.ru/upload/img/23-12-2019/1/5.jpg"
+        },
+        "_id": "jWxYOs9bh5jeAdNm"
+    },
+    {
+        "content": "Вот эта прикольная",
+        "date": "2022.09.02: 21:21",
+        "attachments": [{
+            "filename": "string",
+            "url": "https://assets.entrepreneur.com/content/3x2/2000/20170921221322-GettyImages-515057138.jpeg"
+        }],
+        "user": {
+            "_id": "VQaigeIu0deS0Myd",
+            "fullName": "Иван Пупкин",
+            "avatar": "https://texterra.ru/upload/img/23-12-2019/1/5.jpg"
+        },
+        "_id": "G9hTBtnrs4lyWW7A"
+
+    },
+    {
+        "content": null,
+        "audio": "https://vk.com/mp3/audio_api_unavailable.mp3?extra=AeTim3zKuOTdmwq1mgjNsuf5zgrZoNLwnLqVAdjbBMvUovqVlKy4DwniDgfXDfLKyO5fB3nPt3ztyI9Tl296wLDKBZfZqK11AOWVsxb2yte1lLzYoeXgvZzqsffOmxfZnMrlz21wDs1fteLHBKfkBe44lO0WnKOTztbVCenhBtn5AJzYsxzlnwDPsNyXqw4Owu9MowmZAv9Jy2Loy2OYuJe4zLfAEhf1s3yXx3GTALbKv3ziyur0uwXOrNHgAMvdsZLhqLvoAY82ztjirNLmzs4YsM1bsM5qvtuXwhrpEtneudq#AqS3mZa",
+        "date": "2022.09.02: 21:21",
+        "user": {
+            "_id": "EWmE2MJFPGU2thO3",
+            "fullName": "Иван Пупкин",
+            "avatar": "https://texterra.ru/upload/img/23-12-2019/1/5.jpg"
+        },
+        "_id": "amrY03VKQ44X882K"
+
+    }
+]
+

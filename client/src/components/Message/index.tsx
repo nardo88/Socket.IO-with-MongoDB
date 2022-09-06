@@ -37,7 +37,6 @@ const convertCurrentTime = (number: number) => {
 }
 
 const Message: FC<MessageProps> = ({
-  avatar,
   content,
   date,
   isMe,

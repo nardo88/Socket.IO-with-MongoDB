@@ -4,6 +4,7 @@ import ReadIcon from '../icons/Read'
 import './DialogItem.scss'
 
 import dayjs from 'dayjs'
+import Avatar from '../Avatar'
 const isToday = require('dayjs/plugin/isToday')
 dayjs.extend(isToday)
 
@@ -41,11 +42,7 @@ const DialogItem: FC<DialogItemProps> = ({
         className={`dialog__avatar ${
           user.isOnline ? 'dialog__avatar--online' : ''
         }`}>
-        {user.avatar ? (
-          <img src={user.avatar} alt="" />
-        ) : (
-          <div className="dialog__empty-avatar">{user.fullName.slice(0,1)}</div>
-        )}
+        <Avatar user={user} size={40} />
       </div>
       <div className="dialog__info info">
         <div className="info__top">

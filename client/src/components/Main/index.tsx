@@ -3,14 +3,17 @@ import WriteIcon from '../icons/WriteIcon'
 import './Main.scss'
 
 import users from './users.json'
+import messages from './dialog.json'
 
 import { Input } from 'antd'
+import { SendOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import Dialogs from '../Dialogs'
+import Message from '../Message'
 const { Search } = Input
 
-
-
 const Main = () => {
+  const ownId = 'EWmE2MJFPGU2thO3'
   return (
     <div className="main">
       <div className="container">
@@ -34,10 +37,27 @@ const Main = () => {
               />
             </div>
             <div className="dialogs__list">
-                <Dialogs ownerId='EWmE2MJFPGU2thO3' items={users} />
+              <Dialogs ownerId={ownId} items={users} />
             </div>
           </div>
-          <div className="main__content"></div>
+          <div className="main__content content">
+            <div className="content__header">
+              <h3 className="content__title">Иван пупкин</h3>
+            </div>
+            <div className="content__wrapper">
+              {messages.map((item) => (
+                <Message
+                  key={item._id}
+                  {...item}
+                  isMe={ownId === item.user._id}
+                />
+              ))}
+            </div>
+            <div className="content__input">
+              <Input placeholder="Введите сообщение" />
+              <Button type="primary" shape="circle" icon={<SendOutlined />} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
