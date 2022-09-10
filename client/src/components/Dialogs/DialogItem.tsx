@@ -9,6 +9,7 @@ const isToday = require('dayjs/plugin/isToday')
 dayjs.extend(isToday)
 
 interface DialogItemProps {
+  _id: string
   isMe: boolean
   user: {
     fullName: string
@@ -35,9 +36,10 @@ const DialogItem: FC<DialogItemProps> = ({
   isReaded,
   createdAt,
   count,
+  _id,
 }) => {
   return (
-    <div className="dialog">
+    <div className="dialog" onClick={() => console.log(_id)}>
       <div
         className={`dialog__avatar ${
           user.isOnline ? 'dialog__avatar--online' : ''
