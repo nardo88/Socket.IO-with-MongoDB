@@ -5,6 +5,8 @@ import './DialogItem.scss'
 
 import dayjs from 'dayjs'
 import Avatar from '../Avatar'
+import { useDispatch } from 'react-redux'
+import actions from '../../redux/actions/dialogs'
 const isToday = require('dayjs/plugin/isToday')
 dayjs.extend(isToday)
 
@@ -38,8 +40,11 @@ const DialogItem: FC<DialogItemProps> = ({
   count,
   _id,
 }) => {
+  const dispatch = useDispatch()
   return (
-    <div className="dialog" onClick={() => console.log(_id)}>
+    <div
+      className="dialog"
+      onClick={() => dispatch(actions.setCurrentDialog(_id))}>
       <div
         className={`dialog__avatar ${
           user.isOnline ? 'dialog__avatar--online' : ''

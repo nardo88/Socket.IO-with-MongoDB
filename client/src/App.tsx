@@ -6,6 +6,7 @@ import Auth from './pages/Auth'
 import Register from './pages/Register'
 import Test from './pages/Test'
 import actions from './redux/actions/dialogs'
+import actionsMessages from './redux/actions/messages'
 
 function App() {
   const state = useSelector((state) => state)
@@ -13,7 +14,9 @@ function App() {
   useEffect(() => {
     // @ts-ignore
     dispatch(actions.fetchDialogs())
-  }, [])
+    // @ts-ignore
+    dispatch(actionsMessages.fetchMessages('123'))
+  }, [dispatch])
   console.log(state)
   return (
     <div className="wrapper">

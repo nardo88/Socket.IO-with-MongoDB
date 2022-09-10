@@ -8,6 +8,10 @@ const actions = {
       .then((data) => data.json())
       .then((data) => dispatch(actions.setItems(data)))
   },
+  setCurrentDialog: (data: string) => ({
+    type: 'SET_CURRENT_DIALOG',
+    payload: data,
+  }),
 }
 
 export default actions
