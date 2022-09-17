@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = __importDefault(require("../schemas/User"));
+const User_1 = __importDefault(require("../models/User"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 class UserController {
     addUser(req, res) {
@@ -27,11 +27,41 @@ class UserController {
                     email,
                     fullName,
                     password: bcrypt_1.default.hashSync(password, 7),
-                    confirmed: false,
                     confirmHash: '',
                     lastSeen: '',
                 });
+                yield user.save();
                 return res.json(user._id);
+            }
+            catch (e) {
+                return res.status(500).json(e);
+            }
+        });
+    }
+    getUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const user = yield User_1.default.findById(id);
+                if (user) {
+                    return res.json(user);
+                }
+                else {
+                    return res.status(404).json('User not found');
+                }
+            }
+            catch (e) {
+                return res.status(500).json(e);
+            }
+        });
+    }
+    updateUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const body = req.body;
+                yield User_1.default.findByIdAndUpdate(id, body);
+                return res.json('success');
             }
             catch (e) {
                 return res.status(500).json(e);
