@@ -10,6 +10,7 @@ app.use(express.json())
 app.use(cors({}))
 
 app.use('/user', router.user)
+app.use('/dialog', router.dialogs)
 
 const start = async () => {
   await mongoose.connect(constants.mongoUrl)

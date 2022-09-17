@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose'
 interface DialogTypes {
   author: Schema.Types.ObjectId
   partner: Schema.Types.ObjectId
-  lastMessage: string
+  lastMessage?: string
 }
 
 const Dialog = new Schema<DialogTypes>(
