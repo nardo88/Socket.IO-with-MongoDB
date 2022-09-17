@@ -15,14 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const mongo = "mongodb+srv://admin:admin@cluster0.rwelf.mongodb.net/chat?retryWrites=true&w=majority";
+const constants_1 = __importDefault(require("./constants/constants"));
+const index_1 = __importDefault(require("./routers/index"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({}));
+app.use('/user', index_1.default.user);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.connect(mongo);
+    yield mongoose_1.default.connect(constants_1.default.mongoUrl);
     app.listen(5000, () => {
-        console.log("server started...");
+        console.log('server started...');
     });
 });
 start();

@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 interface UserTypes {
-  email: string;
-  fullName: string;
-  password: string;
-  confirmed: boolean;
-  confirmHash: string;
-  lastSeen: string;
-  avatar?: string;
+  email: string
+  fullName: string
+  password: string
+  confirmed: boolean
+  confirmHash: string
+  lastSeen: string
+  avatar?: string
 }
 
 const User = new mongoose.Schema<UserTypes>(
@@ -36,6 +36,6 @@ const User = new mongoose.Schema<UserTypes>(
   {
     timestamps: true,
   }
-);
+)
 
-export default mongoose.model("User", User);
+export default mongoose.model('User', User)
