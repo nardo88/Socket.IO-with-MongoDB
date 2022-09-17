@@ -21,6 +21,8 @@ class UserController {
         lastSeen: '',
       })
 
+      await user.save()
+
       return res.json(user._id)
     } catch (e) {
       return res.status(500).json(e)
