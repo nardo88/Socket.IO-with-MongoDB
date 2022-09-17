@@ -16,7 +16,6 @@ class UserController {
         email,
         fullName,
         password: bcrypt.hashSync(password, 7),
-        confirmed: false,
         confirmHash: '',
         lastSeen: '',
       })
@@ -24,6 +23,32 @@ class UserController {
       await user.save()
 
       return res.json(user._id)
+    } catch (e) {
+      return res.status(500).json(e)
+    }
+  }
+
+  async getUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params
+      const user = await User.findById(id)
+      if (user) {
+        return res.json(user)
+      } else {
+        return res.status(404).json('User not found')
+      }
+    } catch (e) {
+      return res.status(500).json(e)
+    }
+  }
+
+  async updateUser(req: Request, res: Response) {
+    try {
+      const { id } = req.params
+      const body = req.body
+
+      await User.findByIdAndUpdate(id, body)
+      return res.json('success')
     } catch (e) {
       return res.status(500).json(e)
     }
