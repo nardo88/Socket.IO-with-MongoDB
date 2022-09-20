@@ -3,6 +3,7 @@ import Dialogs from '../models/Dialogs'
 
 class DialogController {
   async add(req: Request, res: Response) {
+    // При создании диалога нужно создавать первое сообщение
     try {
       const { author, partner } = req.body
       const dialog = await new Dialogs({
@@ -29,6 +30,16 @@ class DialogController {
           }
           return res.json(dialog)
         })
+    } catch (e) {
+      return res.status(500).json(e)
+    }
+  }
+
+  async removeDialog(req: Request, res: Response) {
+    try {
+      const { id } = req.params
+      await Dialogs.findByIdAndDelete(id)
+      res.json('success')
     } catch (e) {
       return res.status(500).json(e)
     }

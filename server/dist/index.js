@@ -22,6 +22,7 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)({}));
 app.use('/user', index_1.default.user);
 app.use('/dialog', index_1.default.dialogs);
+app.use('/messages', index_1.default.message);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(constants_1.default.mongoUrl);
     app.listen(5000, () => {
