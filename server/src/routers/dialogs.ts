@@ -4,7 +4,8 @@ import authMiddleware from '../maddleware/validateToken'
 
 const dialogRouter = Router()
 
-dialogRouter.post('/', controller.add)
+// @ts-ignore
+dialogRouter.post('/', authMiddleware, controller.add)
 // @ts-ignore
 dialogRouter.get('/', authMiddleware, controller.getList)
 dialogRouter.delete('/:id', controller.removeDialog)

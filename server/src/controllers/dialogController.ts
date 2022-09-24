@@ -8,12 +8,12 @@ interface IRequest extends Request {
 }
 
 class DialogController {
-  async add(req: Request, res: Response) {
+  async add(req: IRequest, res: Response) {
     // При создании диалога нужно создавать первое сообщение
     try {
-      const { author, partner } = req.body
+      const { partner } = req.body
       const dialog = await new Dialogs({
-        author,
+        author: req.user.id,
         partner,
       })
 

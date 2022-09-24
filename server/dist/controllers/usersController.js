@@ -61,6 +61,24 @@ class UserController {
             }
         });
     }
+    getMe(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // @ts-ignore
+                const { id } = req.user;
+                const user = yield User_1.default.findById(id);
+                if (user) {
+                    return res.json(user);
+                }
+                else {
+                    return res.status(404).json('User not found');
+                }
+            }
+            catch (e) {
+                return res.status(500).json(e);
+            }
+        });
+    }
     updateUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -48,6 +48,21 @@ class UserController {
     }
   }
 
+  async getMe(req: Request, res: Response) {
+    try {
+      // @ts-ignore
+      const { id } = req.user
+      const user = await User.findById(id)
+      if (user) {
+        return res.json(user)
+      } else {
+        return res.status(404).json('User not found')
+      }
+    } catch (e) {
+      return res.status(500).json(e)
+    }
+  }
+
   async updateUser(req: Request, res: Response) {
     try {
       const { id } = req.params

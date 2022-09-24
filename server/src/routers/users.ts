@@ -5,6 +5,7 @@ import { check } from 'express-validator'
 
 const userRouter = Router()
 
+userRouter.get('/me', authMiddleware, controller.getMe)
 userRouter.get('/:id', controller.getUser)
 userRouter.put('/:id', controller.updateUser)
 userRouter.post(

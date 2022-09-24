@@ -4,21 +4,35 @@ import mongoose from 'mongoose'
 import constants from './constants/constants'
 import router from './routers/index'
 import dotenv from 'dotenv'
+import http from 'http'
+import { Server } from 'socket.io'
 
 dotenv.config()
 const app = express()
+const server = http.createServer(app)
 
 app.use(express.json())
 app.use(cors({}))
 
-app.use('/user', router.user)
 app.use('/dialog', router.dialogs)
+app.use('/user', router.user)
 app.use('/messages', router.message)
+
+const io = new Server(server, {
+  cors: {
+    // разрешаем подключаться с любых адресов
+    origin: '*',
+  },
+})
+
+io.on('connection', (socket) => {
+  console.log('SOCKET')
+})
 
 const start = async () => {
   await mongoose.connect(constants.mongoUrl)
 
-  app.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT, () => {
     console.log(`server started on port ${process.env.PORT}`)
   })
 }

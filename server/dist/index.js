@@ -18,16 +18,28 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const constants_1 = __importDefault(require("./constants/constants"));
 const index_1 = __importDefault(require("./routers/index"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const http_1 = __importDefault(require("http"));
+const socket_io_1 = require("socket.io");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+const server = http_1.default.createServer(app);
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({}));
-app.use('/user', index_1.default.user);
 app.use('/dialog', index_1.default.dialogs);
+app.use('/user', index_1.default.user);
 app.use('/messages', index_1.default.message);
+const io = new socket_io_1.Server(server, {
+    cors: {
+        // разрешаем подключаться с любых адресов
+        origin: '*',
+    },
+});
+io.on('connection', (socket) => {
+    console.log('SOCKET');
+});
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(constants_1.default.mongoUrl);
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
         console.log(`server started on port ${process.env.PORT}`);
     });
 });
