@@ -1,6 +1,12 @@
 import { Request, Response } from 'express'
 import Dialogs from '../models/Dialogs'
 
+interface IRequest extends Request {
+  user: {
+    id: string
+  }
+}
+
 class DialogController {
   async add(req: Request, res: Response) {
     // При создании диалога нужно создавать первое сообщение
@@ -18,11 +24,9 @@ class DialogController {
     }
   }
 
-  async getList(req: Request, res: Response) {
+  async getList(req: IRequest, res: Response) {
     try {
-      const { authotId } = req.params
-
-      Dialogs.find({ author: authotId })
+      Dialogs.find({ author: req.user.id })
         .populate(['author', 'partner'])
         .exec((err: any, dialog: any) => {
           if (err) {

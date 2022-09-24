@@ -2,10 +2,15 @@ import { Request, Response } from 'express'
 import User from '../models/User'
 import bcrypt from 'bcrypt'
 import generateJWT from '../utils/generateJWT'
+import { validationResult } from 'express-validator'
 
 class UserController {
   async registration(req: Request, res: Response) {
     try {
+      const error = validationResult(req)
+      if (!error.isEmpty()) {
+        res.status(400).json({ message: 'Ошибка при регистрации', error })
+      }
       const { email, fullName, password } = req.body
 
       const candidate = await User.findOne({ email })
@@ -57,6 +62,10 @@ class UserController {
 
   async login(req: Request, res: Response) {
     try {
+      const error = validationResult(req)
+      if (!error.isEmpty()) {
+        res.status(400).json({ message: 'Ошибка при регистрации', error })
+      }
       const { email, password } = req.body
       const user = await User.findOne({ email })
       if (!user) {

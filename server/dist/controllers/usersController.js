@@ -15,10 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = __importDefault(require("../models/User"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const generateJWT_1 = __importDefault(require("../utils/generateJWT"));
+const express_validator_1 = require("express-validator");
 class UserController {
     registration(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const error = (0, express_validator_1.validationResult)(req);
+                if (!error.isEmpty()) {
+                    res.status(400).json({ message: 'Ошибка при регистрации', error });
+                }
                 const { email, fullName, password } = req.body;
                 const candidate = yield User_1.default.findOne({ email });
                 if (candidate) {
@@ -72,6 +77,10 @@ class UserController {
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const error = (0, express_validator_1.validationResult)(req);
+                if (!error.isEmpty()) {
+                    res.status(400).json({ message: 'Ошибка при регистрации', error });
+                }
                 const { email, password } = req.body;
                 const user = yield User_1.default.findOne({ email });
                 if (!user) {
