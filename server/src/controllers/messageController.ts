@@ -20,7 +20,6 @@ class MessageController {
   async getList(req: Request, res: Response) {
     try {
       const { dialogId } = req.params
-      console.log(dialogId)
 
       Message.find({ dialog: dialogId })
         .populate(['dialog'])

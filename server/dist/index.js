@@ -17,6 +17,8 @@ const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const constants_1 = __importDefault(require("./constants/constants"));
 const index_1 = __importDefault(require("./routers/index"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({}));
@@ -25,8 +27,8 @@ app.use('/dialog', index_1.default.dialogs);
 app.use('/messages', index_1.default.message);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(constants_1.default.mongoUrl);
-    app.listen(5000, () => {
-        console.log('server started...');
+    app.listen(process.env.PORT, () => {
+        console.log(`server started on port ${process.env.PORT}`);
     });
 });
 start();

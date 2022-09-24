@@ -14,8 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = __importDefault(require("../models/User"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const generateJWT_1 = __importDefault(require("../utils/generateJWT"));
 class UserController {
-    addUser(req, res) {
+    registration(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { email, fullName, password } = req.body;
@@ -62,6 +63,26 @@ class UserController {
                 const body = req.body;
                 yield User_1.default.findByIdAndUpdate(id, body);
                 return res.json('success');
+            }
+            catch (e) {
+                return res.status(500).json(e);
+            }
+        });
+    }
+    login(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { email, password } = req.body;
+                const user = yield User_1.default.findOne({ email });
+                if (!user) {
+                    return res.status(404).json('user not found');
+                }
+                const validate = bcrypt_1.default.compareSync(password, user.password);
+                if (!validate) {
+                    return res.status(404).json('user not found');
+                }
+                const token = (0, generateJWT_1.default)(user._id);
+                res.json({ token });
             }
             catch (e) {
                 return res.status(500).json(e);

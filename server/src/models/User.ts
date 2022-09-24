@@ -6,7 +6,7 @@ interface UserTypes {
   password: string
   confirmed: boolean
   confirmHash: string
-  lastSeen: string
+  lastSeen: Date
   avatar?: string
 }
 
@@ -31,7 +31,10 @@ const User = new mongoose.Schema<UserTypes>(
       default: false,
     },
     confirmHash: String,
-    lastSeen: String,
+    lastSeen: {
+      type: Date,
+      default: new Date(),
+    },
   },
   {
     timestamps: true,
