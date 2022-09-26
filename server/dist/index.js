@@ -36,6 +36,10 @@ const io = new socket_io_1.Server(server, {
 });
 io.on('connection', (socket) => {
     console.log('SOCKET');
+    socket.emit('test', 'hello new socket');
+    socket.on('saySomething', (message) => {
+        console.log(`client sed ${message}`);
+    });
 });
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(constants_1.default.mongoUrl);

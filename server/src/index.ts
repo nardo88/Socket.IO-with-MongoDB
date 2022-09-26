@@ -27,6 +27,11 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   console.log('SOCKET')
+  socket.emit('test', 'hello new socket')
+
+  socket.on('saySomething', (message: any) => {
+    console.log(`client sed ${message}`)
+  })
 })
 
 const start = async () => {
