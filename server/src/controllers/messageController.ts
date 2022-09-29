@@ -1,16 +1,25 @@
+import { io } from './../index'
 import { Request, Response } from 'express'
 import Message from '../models/Message'
+import socket from 'socket.io'
 
 class MessageController {
-  async add(req: Request, res: Response) {
+  io: socket.Server
+  constructor(io: socket.Server) {
+    this.io = io
+  }
+
+  add = async (req: Request, res: Response) => {
     try {
       const { text, dialogId } = req.body
-      const message = await new Message({
+      const message = new Message({
         text,
         dialog: dialogId,
       })
 
+      console.log(this.io)
       await message.save()
+      this.io.emit('NEW_MESSAGE', message)
       res.json(message)
     } catch (e) {
       return res.status(500).json(e)
@@ -45,4 +54,4 @@ class MessageController {
   }
 }
 
-export default new MessageController()
+export default new MessageController(io)

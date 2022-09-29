@@ -11,6 +11,16 @@ dotenv.config()
 const app = express()
 const server = http.createServer(app)
 
+export const io = new Server(server, {
+  cors: {
+    // разрешаем подключаться с любых адресов
+    origin: '*',
+  },
+})
+
+//  TODO необходимо написать функцию, которая будет создавать роуты и в которой будут создаваться контроллеры в конструктор которых будет передан io
+const createRouters = (app: any, io: any) => {}
+
 app.use(express.json())
 app.use(cors({}))
 
@@ -18,25 +28,16 @@ app.use('/dialog', router.dialogs)
 app.use('/user', router.user)
 app.use('/messages', router.message)
 
-const io = new Server(server, {
-  cors: {
-    // разрешаем подключаться с любых адресов
-    origin: '*',
-  },
-})
-
 io.on('connection', (socket) => {
   console.log('SOCKET')
-  socket.emit('test', 'hello new socket')
 
-  socket.on('saySomething', (message: any) => {
+  socket.on('NEW_MESSAGE', (message: any) => {
     console.log(`client sed ${message}`)
   })
 })
 
 const start = async () => {
   await mongoose.connect(constants.mongoUrl)
-
   server.listen(process.env.PORT, () => {
     console.log(`server started on port ${process.env.PORT}`)
   })
