@@ -17,6 +17,7 @@ function App() {
     // @ts-ignore
     dispatch(actionsMessages.fetchMessages('123'))
   }, [dispatch])
+
   console.log(state)
   return (
     <div className="wrapper">

@@ -4,9 +4,9 @@ const actions = {
     payload: data,
   }),
   fetchDialogs: () => (dispatch: any) => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((data) => data.json())
-      .then((data) => dispatch(actions.setItems(data)))
+    // fetch('https://jsonplaceholder.typicode.com/users')
+    //   .then((data) => data.json())
+    //   .then((data) => dispatch(actions.setItems(data)))
   },
   setCurrentDialog: (data: string) => ({
     type: 'SET_CURRENT_DIALOG',

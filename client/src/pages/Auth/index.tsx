@@ -4,10 +4,37 @@ import './Auth.scss'
 import { Form, Input } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { NavLink } from 'react-router-dom'
+import api from '../../hooks/axios'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import actions from '../../redux/actions/user'
 
 const Auth = () => {
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+  const dispatch = useDispatch()
+
+  const onFinish = async (values: any) => {
+    setIsLoading(true)
+    setError('')
+    api
+      .post('/user/signin', {
+        ...values,
+      })
+      .then(({ data }) => {
+        if (!data.token) {
+          setError(data)
+        }
+        localStorage.setItem('userData', data.token)
+        // @ts-ignore
+        dispatch(actions.fetchUserData())
+      })
+      .catch((res) => {
+        console.log(res)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
@@ -23,7 +50,7 @@ const Auth = () => {
           initialValues={{ remember: true }}
           onFinish={onFinish}>
           <Form.Item
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,
@@ -49,12 +76,14 @@ const Auth = () => {
               placeholder="Password"
             />
           </Form.Item>
+          {error && <div className="auth__error">{error}</div>}
           <Form.Item>
             <Button
               type="primary"
+              disabled={isLoading}
               htmlType="submit"
               className="login-form-button">
-              Войти в аккаунт
+              {isLoading ? 'Отправка...' : 'Войти в аккаунт'}
             </Button>
           </Form.Item>
           <NavLink to="/register">Зарегистрироваться</NavLink>

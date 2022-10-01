@@ -4,10 +4,9 @@ const actions = {
     payload: data,
   }),
   fetchMessages: (dialogId: string) => (dispatch: any) => {
-    console.log(dialogId)
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((data) => data.json())
-      .then((data) => dispatch(actions.setMessages(data)))
+    // fetch('https://jsonplaceholder.typicode.com/users')
+    //   .then((data) => data.json())
+    // .then((data) => dispatch(actions.setMessages(data)))
   },
 }
 
