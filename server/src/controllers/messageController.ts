@@ -2,6 +2,7 @@ import { io } from './../index'
 import { Request, Response } from 'express'
 import Message from '../models/Message'
 import socket from 'socket.io'
+import Dialogs from '../models/Dialogs'
 
 class MessageController {
   io: socket.Server
@@ -11,15 +12,18 @@ class MessageController {
 
   add = async (req: Request, res: Response) => {
     try {
+      // @ts-ignore
+      const author = req.user.id
       const { text, dialogId } = req.body
       const message = new Message({
         text,
         dialog: dialogId,
+        author,
       })
-
+      const dialog = await Dialogs.findById(dialogId)
       await message.save()
       this.io.emit('NEW_MESSAGE', message)
-      res.json(message)
+      res.json({ message, dialog })
     } catch (e) {
       return res.status(500).json(e)
     }

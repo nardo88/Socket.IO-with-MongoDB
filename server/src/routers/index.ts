@@ -35,7 +35,7 @@ const createRouters = (io: any) => {
 
   const messageRouter = Router()
 
-  messageRouter.post('/', messageController.add)
+  messageRouter.post('/', authMiddleware, messageController.add)
   messageRouter.get('/:dialogId', messageController.getList)
   messageRouter.delete('/:id', messageController.removeMessage)
 

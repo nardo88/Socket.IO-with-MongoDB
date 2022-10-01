@@ -4,6 +4,7 @@ interface MessageTypes {
   text: string
   unread: boolean
   dialog: Schema.Types.ObjectId
+  author: Schema.Types.ObjectId
 }
 
 const Message = new Schema<MessageTypes>(
@@ -18,6 +19,7 @@ const Message = new Schema<MessageTypes>(
       default: false,
     },
     dialog: { type: Schema.Types.ObjectId, ref: 'Dialog' },
+    author: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   {
     timestamps: true,

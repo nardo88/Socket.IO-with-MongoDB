@@ -30,7 +30,6 @@ exports.io = new socket_io_1.Server(server, {
         origin: '*',
     },
 });
-//  TODO необходимо написать функцию, которая будет создавать роуты и в которой будут создаваться контроллеры в конструктор которых будет передан io
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({}));
 const router = (0, routers_1.default)(exports.io);
