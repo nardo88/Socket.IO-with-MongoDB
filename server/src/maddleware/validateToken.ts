@@ -24,7 +24,7 @@ const authMiddleware = async (
   try {
     const token = req.headers.authorization?.split(' ')[1]
     if (!token) {
-      return res.status(401).json({ message: 'Auth error' })
+      return res.json({ message: 'Auth error' })
     }
     const secretKey = process.env.JWT_SECRET as string
     const decoded: IDecoded = jwt.verify(token, secretKey) as IDecoded

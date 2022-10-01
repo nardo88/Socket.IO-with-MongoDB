@@ -100,16 +100,16 @@ class UserController {
             try {
                 const error = (0, express_validator_1.validationResult)(req);
                 if (!error.isEmpty()) {
-                    res.status(400).json({ message: 'Ошибка при регистрации', error });
+                    res.json({ message: 'Ошибка при регистрации', error });
                 }
                 const { email, password } = req.body;
                 const user = yield User_1.default.findOne({ email });
                 if (!user) {
-                    return res.status(404).json('user not found');
+                    return res.json('Неверный логин или пароль');
                 }
                 const validate = bcrypt_1.default.compareSync(password, user.password);
                 if (!validate) {
-                    return res.status(404).json('user not found');
+                    return res.json('Неверный логин или пароль');
                 }
                 const token = (0, generateJWT_1.default)(user._id);
                 res.json({ token });

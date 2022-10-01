@@ -85,18 +85,18 @@ class UserController {
     try {
       const error = validationResult(req)
       if (!error.isEmpty()) {
-        res.status(400).json({ message: 'Ошибка при регистрации', error })
+        res.json({ message: 'Ошибка при регистрации', error })
       }
       const { email, password } = req.body
       const user = await User.findOne({ email })
       if (!user) {
-        return res.status(404).json('user not found')
+        return res.json('Неверный логин или пароль')
       }
 
       const validate = bcrypt.compareSync(password, user.password)
 
       if (!validate) {
-        return res.status(404).json('user not found')
+        return res.json('Неверный логин или пароль')
       }
 
       const token = generateJWT(user._id)
