@@ -17,6 +17,9 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const generateJWT_1 = __importDefault(require("../utils/generateJWT"));
 const express_validator_1 = require("express-validator");
 class UserController {
+    constructor(io) {
+        this.io = io;
+    }
     registration(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -117,4 +120,4 @@ class UserController {
         });
     }
 }
-exports.default = new UserController();
+exports.default = UserController;

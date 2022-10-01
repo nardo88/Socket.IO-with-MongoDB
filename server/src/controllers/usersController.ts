@@ -3,8 +3,14 @@ import User from '../models/User'
 import bcrypt from 'bcrypt'
 import generateJWT from '../utils/generateJWT'
 import { validationResult } from 'express-validator'
+import socket from 'socket.io'
 
 class UserController {
+  io: socket.Server
+  constructor(io: socket.Server) {
+    this.io = io
+  }
+
   async registration(req: Request, res: Response) {
     try {
       const error = validationResult(req)
@@ -101,4 +107,4 @@ class UserController {
   }
 }
 
-export default new UserController()
+export default UserController

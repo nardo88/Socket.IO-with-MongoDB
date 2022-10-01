@@ -2,10 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import constants from './constants/constants'
-import router from './routers/index'
 import dotenv from 'dotenv'
 import http from 'http'
 import { Server } from 'socket.io'
+import createRouters from './routers'
 
 dotenv.config()
 const app = express()
@@ -19,14 +19,15 @@ export const io = new Server(server, {
 })
 
 //  TODO необходимо написать функцию, которая будет создавать роуты и в которой будут создаваться контроллеры в конструктор которых будет передан io
-const createRouters = (app: any, io: any) => {}
 
 app.use(express.json())
 app.use(cors({}))
 
-app.use('/dialog', router.dialogs)
-app.use('/user', router.user)
-app.use('/messages', router.message)
+const router = createRouters(io)
+
+app.use('/dialog', router.dialogRouter)
+app.use('/user', router.userRouter)
+app.use('/messages', router.messageRouter)
 
 io.on('connection', (socket) => {
   console.log('SOCKET')

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import Dialogs from '../models/Dialogs'
+import socket from 'socket.io'
 
 interface IRequest extends Request {
   user: {
@@ -8,6 +9,11 @@ interface IRequest extends Request {
 }
 
 class DialogController {
+  io: socket.Server
+  constructor(io: socket.Server) {
+    this.io = io
+  }
+
   async add(req: IRequest, res: Response) {
     // При создании диалога нужно создавать первое сообщение
     try {
@@ -50,4 +56,4 @@ class DialogController {
   }
 }
 
-export default new DialogController()
+export default DialogController

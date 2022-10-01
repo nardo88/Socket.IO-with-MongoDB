@@ -17,7 +17,6 @@ class MessageController {
         dialog: dialogId,
       })
 
-      console.log(this.io)
       await message.save()
       this.io.emit('NEW_MESSAGE', message)
       res.json(message)
@@ -54,4 +53,4 @@ class MessageController {
   }
 }
 
-export default new MessageController(io)
+export default MessageController
