@@ -9,7 +9,10 @@ const actions = {
     api
       .get('/user/me')
       .then(({ data }) => {
-        dispatch(actions.setUser(data))
+        if (data._id) {
+          dispatch(actions.setUser(data))
+        }
+        console.log('data - ', data)
       })
       .catch((error) => console.log(error))
   },

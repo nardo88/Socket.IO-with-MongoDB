@@ -3,16 +3,23 @@ import Button from '../../components/Button'
 import './Auth.scss'
 import { Form, Input } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import api from '../../hooks/axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import actions from '../../redux/actions/user'
 
-const Auth = () => {
+const Auth = ({ isAuth }: any) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/dialogs')
+    }
+  }, [isAuth])
 
   const onFinish = async (values: any) => {
     setIsLoading(true)
