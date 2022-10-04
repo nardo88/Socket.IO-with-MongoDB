@@ -21,20 +21,20 @@ class UserController {
 
       const candidate = await User.findOne({ email })
       if (candidate) {
-        return res.status(500).json('User already exist')
+        return res.json({ status: 'error', message: 'User already exist' })
       }
 
       const user = await new User({
         email,
         fullName,
         password: bcrypt.hashSync(password, 7),
-        confirmHash: '',
+        confirmHash: '' + new Date().valueOf(),
         lastSeen: '',
       })
 
       await user.save()
 
-      return res.json(user._id)
+      return res.json(user)
     } catch (e) {
       return res.status(500).json(e)
     }
@@ -90,15 +90,37 @@ class UserController {
       const { email, password } = req.body
       const user = await User.findOne({ email })
       if (!user) {
-        return res.json('Неверный логин или пароль')
+        return res.json({ message: 'Неверный логин или пароль' })
+      }
+      if (!user.confirmed) {
+        return res.json({
+          status: 'error',
+          message: 'Пользователь не подтвержден',
+        })
       }
 
       const validate = bcrypt.compareSync(password, user.password)
 
       if (!validate) {
-        return res.json('Неверный логин или пароль')
+        return res.json({ message: 'Неверный логин или пароль' })
       }
 
+      const token = generateJWT(user._id)
+      res.json({ token })
+    } catch (e) {
+      return res.status(500).json(e)
+    }
+  }
+
+  async confirm(req: Request, res: Response) {
+    try {
+      const { hash } = req.params
+      const user = await User.findOne({ confirmHash: hash, confirmed: false })
+      if (!user) {
+        return res.json({ status: 'error', message: 'Hash not found' })
+      }
+      user.confirmed = true
+      await user.save()
       const token = generateJWT(user._id)
       res.json({ token })
     } catch (e) {

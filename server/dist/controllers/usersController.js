@@ -30,17 +30,17 @@ class UserController {
                 const { email, fullName, password } = req.body;
                 const candidate = yield User_1.default.findOne({ email });
                 if (candidate) {
-                    return res.status(500).json('User already exist');
+                    return res.json({ status: 'error', message: 'User already exist' });
                 }
                 const user = yield new User_1.default({
                     email,
                     fullName,
                     password: bcrypt_1.default.hashSync(password, 7),
-                    confirmHash: '',
+                    confirmHash: '' + new Date().valueOf(),
                     lastSeen: '',
                 });
                 yield user.save();
-                return res.json(user._id);
+                return res.json(user);
             }
             catch (e) {
                 return res.status(500).json(e);
@@ -105,12 +105,36 @@ class UserController {
                 const { email, password } = req.body;
                 const user = yield User_1.default.findOne({ email });
                 if (!user) {
-                    return res.json('Неверный логин или пароль');
+                    return res.json({ message: 'Неверный логин или пароль' });
+                }
+                if (!user.confirmed) {
+                    return res.json({
+                        status: 'error',
+                        message: 'Пользователь не подтвержден',
+                    });
                 }
                 const validate = bcrypt_1.default.compareSync(password, user.password);
                 if (!validate) {
-                    return res.json('Неверный логин или пароль');
+                    return res.json({ message: 'Неверный логин или пароль' });
                 }
+                const token = (0, generateJWT_1.default)(user._id);
+                res.json({ token });
+            }
+            catch (e) {
+                return res.status(500).json(e);
+            }
+        });
+    }
+    confirm(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { hash } = req.params;
+                const user = yield User_1.default.findOne({ confirmHash: hash, confirmed: false });
+                if (!user) {
+                    return res.json({ status: 'error', message: 'Hash not found' });
+                }
+                user.confirmed = true;
+                yield user.save();
                 const token = (0, generateJWT_1.default)(user._id);
                 res.json({ token });
             }

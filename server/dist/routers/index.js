@@ -19,6 +19,7 @@ const createRouters = (io) => {
     userRouter.put('/:id', userController.updateUser);
     userRouter.post('/signup', [(0, express_validator_1.check)('email', 'Email is not correct').isEmail()], userController.registration);
     userRouter.post('/signin', [(0, express_validator_1.check)('email', 'Email is not correct').isEmail()], userController.login);
+    userRouter.put('/confirm/:hash', userController.confirm);
     const dialogRouter = (0, express_1.Router)();
     // @ts-ignore
     dialogRouter.post('/', validateToken_1.default, dialogController.add);

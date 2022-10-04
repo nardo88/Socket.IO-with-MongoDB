@@ -24,6 +24,7 @@ const createRouters = (io: any) => {
     [check('email', 'Email is not correct').isEmail()],
     userController.login
   )
+  userRouter.put('/confirm/:hash', userController.confirm)
 
   const dialogRouter = Router()
 
