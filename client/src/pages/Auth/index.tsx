@@ -19,7 +19,7 @@ const Auth = ({ isAuth }: any) => {
     if (isAuth) {
       navigate('/dialogs')
     }
-  }, [isAuth])
+  }, [isAuth, navigate])
 
   const onFinish = async (values: any) => {
     setIsLoading(true)
@@ -30,7 +30,7 @@ const Auth = ({ isAuth }: any) => {
       })
       .then(({ data }) => {
         if (!data.token) {
-          setError(data)
+          setError(data.message)
         }
         localStorage.setItem('userData', data.token)
         // @ts-ignore

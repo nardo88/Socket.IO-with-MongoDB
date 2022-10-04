@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import NotFound from './components/NotFound'
 import Auth from './pages/Auth'
+import Confirm from './pages/Confirm'
 import Register from './pages/Register'
 import Test from './pages/Test'
 import actions from './redux/actions/user'
@@ -30,6 +31,9 @@ function App() {
           <>
             <Route path="/" element={<Auth isAuth={isAuth} />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/register/confim" element={<Confirm />}>
+              <Route path=":hash" element={<Confirm />} />
+            </Route>
           </>
         ) : (
           <>

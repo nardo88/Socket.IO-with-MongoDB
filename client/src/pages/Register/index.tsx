@@ -3,18 +3,41 @@ import Button from '../../components/Button'
 import './Auth.scss'
 import { Form, Input } from 'antd'
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import api from '../../hooks/axios'
 
 const Register = () => {
+  const navigate = useNavigate()
+
   const onFinish = (values: any) => {
-    console.log('Success:', values)
+    if (values.pass === values.repetpass) {
+      api
+        .post('/user/signup', {
+          email: values.email,
+          fullName: values.name,
+          password: values.pass,
+        })
+        .then(({ data }) => {
+          if (data.status === 'error') {
+            alert(data.message)
+          } else {
+            console.log(data)
+            navigate('/register/confim')
+          }
+        })
+        .catch((data) => {
+          console.log(data)
+        })
+    } else {
+      alert('Не верно ввели пароль')
+    }
   }
 
   return (
     <section className="auth">
       <div className="auth__top">
-        <h2>Войти в аккаунт</h2>
-        <p>Пожалуйста, войдите в свой аккаунт</p>
+        <h2>Регистрация</h2>
+        <p>Пожалуйста, заполните поля для регистрации.</p>
       </div>
       <Block className="auth__block form">
         <Form
@@ -80,7 +103,7 @@ const Register = () => {
               type="primary"
               htmlType="submit"
               className="login-form-button">
-              Войти в аккаунт
+              Зарегистрироваться
             </Button>
           </Form.Item>
           <NavLink to="/">Войти в аккаунт</NavLink>

@@ -16,6 +16,21 @@ const actions = {
       })
       .catch((error) => console.log(error))
   },
+  confirmUser: (hash: string) => (dispatch: any) => {
+    api
+      .put(`/user/confirm/${hash}`)
+      .then(({ data }) => {
+        console.log(data)
+        if (data.status === 'error') {
+          alert(data.message)
+        } else {
+          localStorage.setItem('userData', data.token)
+          // @ts-ignore
+          dispatch(actions.fetchUserData())
+        }
+      })
+      .catch((error) => console.log(error))
+  },
 }
 
 export default actions
