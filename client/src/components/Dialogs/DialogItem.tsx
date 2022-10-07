@@ -39,7 +39,10 @@ const DialogItem: FC<DialogItemProps> = ({
   createdAt,
   count,
   _id,
-}) => {
+  author,
+  partner,
+  lastMessage,
+}: any) => {
   const dispatch = useDispatch()
   return (
     <div
@@ -47,17 +50,17 @@ const DialogItem: FC<DialogItemProps> = ({
       onClick={() => dispatch(actions.setCurrentDialog(_id))}>
       <div
         className={`dialog__avatar ${
-          user.isOnline ? 'dialog__avatar--online' : ''
+          user?.isOnline ? 'dialog__avatar--online' : ''
         }`}>
-        <Avatar user={user} size={40} />
+        <Avatar user={partner} size={40} />
       </div>
       <div className="dialog__info info">
         <div className="info__top">
-          <b>{user.fullName}</b>
+          <b>{partner.fullName}</b>
           <div className="info__date">{getDate(createdAt)}</div>
         </div>
         <div className="info__bottom">
-          <p className="info__message">{text}</p>
+          <p className="info__message">{lastMessage.message}</p>
           {isMe ? (
             <span> {isReaded ? <ReadIcon /> : <NotReadIcon />}</span>
           ) : (

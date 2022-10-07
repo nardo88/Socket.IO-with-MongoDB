@@ -12,7 +12,6 @@ const actions = {
         if (data._id) {
           dispatch(actions.setUser(data))
         }
-        console.log('data - ', data)
       })
       .catch((error) => console.log(error))
   },
@@ -20,7 +19,6 @@ const actions = {
     api
       .put(`/user/confirm/${hash}`)
       .then(({ data }) => {
-        console.log(data)
         if (data.status === 'error') {
           alert(data.message)
         } else {

@@ -7,10 +7,15 @@ interface DialogItemProps {
 }
 
 const Dialogs: FC<DialogItemProps> = ({ items, ownerId }) => {
+  console.log(items)
   return (
     <div>
       {items.map((item: any) => (
-        <DialogItem key={item._id} isMe={item.user._id === ownerId} {...item} />
+        <DialogItem
+          key={item._id}
+          isMe={item.lastMessage.userId === ownerId}
+          {...item}
+        />
       ))}
     </div>
   )

@@ -4,9 +4,10 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import NotFound from './components/NotFound'
 import Auth from './pages/Auth'
 import Confirm from './pages/Confirm'
+import Dialogs from './pages/Dialogs'
 import Register from './pages/Register'
-import Test from './pages/Test'
 import actions from './redux/actions/user'
+import dialogAction from './redux/actions/dialogs'
 
 function App() {
   const isAuth = useSelector((state: any) => state.user.isAuth)
@@ -16,6 +17,8 @@ function App() {
   useEffect(() => {
     // @ts-ignore
     dispatch(actions.fetchUserData())
+    // @ts-ignore
+    dispatch(dialogAction.fetchDialogs())
   }, [dispatch])
 
   useEffect(() => {
@@ -23,7 +26,7 @@ function App() {
       navigate('/dialogs')
     }
   }, [isAuth, navigate])
-  console.log(state)
+
   return (
     <div className="wrapper">
       <Routes>
@@ -37,7 +40,7 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/dialogs" element={<Test />} />
+            <Route path="/dialogs" element={<Dialogs />} />
           </>
         )}
 

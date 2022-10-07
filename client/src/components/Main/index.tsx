@@ -2,18 +2,20 @@ import GroupIcon from '../icons/GroupIcon'
 import WriteIcon from '../icons/WriteIcon'
 import './Main.scss'
 
-import users from './users.json'
 import messages from './dialog.json'
 
 import { Input } from 'antd'
-import { SendOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { SendOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 import Dialogs from '../Dialogs'
 import Message from '../Message'
+import { useSelector } from 'react-redux'
 const { Search } = Input
 
 const Main = () => {
-  const ownId = 'EWmE2MJFPGU2thO3'
+  const ownId = useSelector((state: any) => state.user.data._id)
+  const dialogs = useSelector((state: any) => state.dialogs.items)
+  console.log(dialogs)
   return (
     <div className="main">
       <div className="container">
@@ -37,7 +39,7 @@ const Main = () => {
               />
             </div>
             <div className="dialogs__list">
-              <Dialogs ownerId={ownId} items={users} />
+              <Dialogs ownerId={ownId} items={dialogs} />
             </div>
           </div>
           <div className="main__content content">

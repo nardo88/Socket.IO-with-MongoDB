@@ -21,7 +21,6 @@ const Register = () => {
           if (data.status === 'error') {
             alert(data.message)
           } else {
-            console.log(data)
             navigate('/register/confim')
           }
         })

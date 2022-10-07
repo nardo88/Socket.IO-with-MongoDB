@@ -17,10 +17,11 @@ class DialogController {
   async add(req: IRequest, res: Response) {
     // При создании диалога нужно создавать первое сообщение
     try {
-      const { partner } = req.body
+      const { partner, lastMessage } = req.body
       const dialog = await new Dialogs({
         author: req.user.id,
         partner,
+        lastMessage,
       })
 
       await dialog.save()
