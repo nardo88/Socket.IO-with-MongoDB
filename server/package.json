@@ -15,6 +15,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.18",
     "@types/socket.io": "^3.0.2",
+    "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.6",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
@@ -29,6 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.1",
     "socket.io": "^4.5.2",
+    "uuid": "^9.0.0",
     "validator": "^13.7.0"
   }
 }

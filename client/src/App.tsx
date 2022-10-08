@@ -4,29 +4,26 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import NotFound from './components/NotFound'
 import Auth from './pages/Auth'
 import Confirm from './pages/Confirm'
-import Dialogs from './pages/Dialogs'
+import DialogsPage from './pages/Dialogs'
 import Register from './pages/Register'
-import actions from './redux/actions/user'
-import dialogAction from './redux/actions/dialogs'
+import { fetchUserData } from './redux/reducers/user'
 
 function App() {
   const isAuth = useSelector((state: any) => state.user.isAuth)
-  const state = useSelector((state: any) => state)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
-    // @ts-ignore
-    dispatch(actions.fetchUserData())
-    // @ts-ignore
-    dispatch(dialogAction.fetchDialogs())
-  }, [dispatch])
+    if(!isAuth){
+      // @ts-ignore
+      dispatch(fetchUserData())
+    }
+  }, [dispatch, isAuth])
 
   useEffect(() => {
     if (isAuth) {
       navigate('/dialogs')
     }
   }, [isAuth, navigate])
-
   return (
     <div className="wrapper">
       <Routes>
@@ -40,7 +37,7 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/dialogs" element={<Dialogs />} />
+            <Route path="/dialogs" element={<DialogsPage />} />
           </>
         )}
 

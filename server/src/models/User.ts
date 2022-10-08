@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 interface UserTypes {
+  _id: string
   email: string
   fullName: string
   password: string
@@ -12,12 +13,16 @@ interface UserTypes {
 
 const User = new mongoose.Schema<UserTypes>(
   {
+    _id: String,
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    avatar: String,
+    avatar: {
+      type: String,
+      default: '',
+    },
     fullName: {
       type: String,
       required: true,

@@ -16,6 +16,7 @@ const User_1 = __importDefault(require("../models/User"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const generateJWT_1 = __importDefault(require("../utils/generateJWT"));
 const express_validator_1 = require("express-validator");
+const uuid_1 = require("uuid");
 class UserController {
     constructor(io) {
         this.io = io;
@@ -33,6 +34,7 @@ class UserController {
                     return res.json({ status: 'error', message: 'User already exist' });
                 }
                 const user = yield new User_1.default({
+                    _id: (0, uuid_1.v4)(),
                     email,
                     fullName,
                     password: bcrypt_1.default.hashSync(password, 7),
@@ -43,6 +45,7 @@ class UserController {
                 return res.json(user);
             }
             catch (e) {
+                console.log(e);
                 return res.status(500).json(e);
             }
         });

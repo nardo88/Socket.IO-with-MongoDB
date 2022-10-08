@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import api from '../../hooks/axios'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import actions from '../../redux/actions/user'
+import { fetchUserData } from '../../redux/reducers/user'
 
 const Auth = ({ isAuth }: any) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -34,7 +34,7 @@ const Auth = ({ isAuth }: any) => {
         }
         localStorage.setItem('userData', data.token)
         // @ts-ignore
-        dispatch(actions.fetchUserData())
+        dispatch(fetchUserData())
       })
       .catch((res) => {
         console.log(res)

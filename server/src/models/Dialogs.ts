@@ -1,10 +1,11 @@
 import mongoose, { Schema } from 'mongoose'
 
 interface DialogTypes {
-  author: Schema.Types.ObjectId
-  partner: Schema.Types.ObjectId
+  _id: string
+  author: Schema.Types.String
+  partner: Schema.Types.String
   lastMessage?: {
-    userId: Schema.Types.ObjectId
+    userId: Schema.Types.String
     message: string
     readed: boolean
   }
@@ -12,19 +13,20 @@ interface DialogTypes {
 
 const Dialog = new Schema<DialogTypes>(
   {
+    _id: String,
     author: {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.String,
       required: true,
       ref: 'User',
     },
     partner: {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.String,
       required: true,
       ref: 'User',
     },
     lastMessage: {
       userId: {
-        type: Schema.Types.ObjectId,
+        type: Schema.Types.String,
         required: true,
         ref: 'User',
       },

@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import Message from '../models/Message'
 import socket from 'socket.io'
 import Dialogs from '../models/Dialogs'
+import {v4} from 'uuid'
 
 class MessageController {
   io: socket.Server
@@ -16,6 +17,7 @@ class MessageController {
       const author = req.user.id
       const { text, dialogId } = req.body
       const message = new Message({
+        _id: v4(),
         text,
         dialog: dialogId,
         author,

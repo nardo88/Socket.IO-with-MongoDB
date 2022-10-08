@@ -2,7 +2,7 @@ import { Result } from 'antd'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import actions from '../../redux/actions/user'
+import { confirmUser } from '../../redux/reducers/user'
 
 const Confirm = () => {
   const [status, setStatus] = useState<'success' | 'error'>('success')
@@ -11,7 +11,7 @@ const Confirm = () => {
   if (hash) {
     try {
       // @ts-ignore
-      dispatch(actions.confirmUser(hash))
+      dispatch(confirmUser(hash))
     } catch (e) {
       setStatus('error')
       console.log(e)

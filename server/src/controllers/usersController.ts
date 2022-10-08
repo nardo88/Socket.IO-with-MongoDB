@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import generateJWT from '../utils/generateJWT'
 import { validationResult } from 'express-validator'
 import socket from 'socket.io'
+import {v4} from 'uuid'
 
 class UserController {
   io: socket.Server
@@ -25,6 +26,7 @@ class UserController {
       }
 
       const user = await new User({
+        _id: v4(),
         email,
         fullName,
         password: bcrypt.hashSync(password, 7),
@@ -36,6 +38,7 @@ class UserController {
 
       return res.json(user)
     } catch (e) {
+      console.log(e);
       return res.status(500).json(e)
     }
   }

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import Dialogs from '../models/Dialogs'
 import socket from 'socket.io'
+import {v4} from 'uuid'
 
 interface IRequest extends Request {
   user: {
@@ -19,6 +20,7 @@ class DialogController {
     try {
       const { partner, lastMessage } = req.body
       const dialog = await new Dialogs({
+        _id: v4(),
         author: req.user.id,
         partner,
         lastMessage,
@@ -33,15 +35,53 @@ class DialogController {
 
   async getList(req: IRequest, res: Response) {
     try {
-      Dialogs.find({ author: req.user.id })
-        .populate(['author', 'partner'])
-        .exec((err: any, dialog: any) => {
-          if (err) {
-            return res.status(404).json('Dialog not found')
+      const userId = req.user.id
+
+      const dialogs = await Dialogs.aggregate([
+        {
+          $match: {
+            $or: [{ partner: userId }, { author: userId }],
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'partner',
+            foreignField: '_id',
+            as: 'partner' 
           }
-          return res.json(dialog)
-        })
+        },
+        { $unwind: '$partner' },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'author',
+            foreignField: '_id',
+            as: 'author' 
+          }
+        },
+        {$unwind: '$author'},
+        {$project: {
+          id: '$_id',
+          _id: 0,
+          lastMessage: 1,
+          updatedAt: 1,
+          partner: {
+            id: '$partner._id',
+            name: '$partner.fullName',
+            avatar: '$partner.avatar',
+          },
+          author: {
+            id: '$author._id',
+            name: '$author.fullName',
+            avatar: '$author.avatar',
+          }
+        }}
+      ])
+
+      return res.json(dialogs)
     } catch (e) {
+      console.log(e);
       return res.status(500).json(e)
     }
   }

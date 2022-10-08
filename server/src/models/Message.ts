@@ -1,14 +1,16 @@
 import mongoose, { Schema } from 'mongoose'
 
 interface MessageTypes {
+  _id: string
   text: string
   unread: boolean
-  dialog: Schema.Types.ObjectId
-  author: Schema.Types.ObjectId
+  dialog: string
+  author: string
 }
 
 const Message = new Schema<MessageTypes>(
   {
+    _id: String,
     text: {
       type: Schema.Types.String,
       required: true,
@@ -18,8 +20,8 @@ const Message = new Schema<MessageTypes>(
       required: true,
       default: false,
     },
-    dialog: { type: Schema.Types.ObjectId, ref: 'Dialog' },
-    author: { type: Schema.Types.ObjectId, ref: 'User' },
+    dialog: { type: Schema.Types.String, ref: 'Dialog' },
+    author: { type: Schema.Types.String, ref: 'User' },
   },
   {
     timestamps: true,
