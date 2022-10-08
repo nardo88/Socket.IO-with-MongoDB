@@ -27,7 +27,7 @@ const createRouters = (io) => {
     dialogRouter.get('/', validateToken_1.default, dialogController.getList);
     dialogRouter.delete('/:id', dialogController.removeDialog);
     const messageRouter = (0, express_1.Router)();
-    messageRouter.post('/', validateToken_1.default, messageController.add);
+    messageRouter.post('/:dialogId', validateToken_1.default, messageController.add);
     messageRouter.get('/:dialogId', messageController.getList);
     messageRouter.delete('/:id', messageController.removeMessage);
     return {

@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import Message from '../models/Message'
 import socket from 'socket.io'
 import Dialogs from '../models/Dialogs'
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 class MessageController {
   io: socket.Server
@@ -15,7 +15,9 @@ class MessageController {
     try {
       // @ts-ignore
       const author = req.user.id
-      const { text, dialogId } = req.body
+      const { dialogId } = req.params
+
+      const { text } = req.body
       const message = new Message({
         _id: v4(),
         text,
@@ -35,15 +37,41 @@ class MessageController {
     try {
       const { dialogId } = req.params
 
-      Message.find({ dialog: dialogId })
-        .populate(['dialog'])
-        .exec((err: any, messages: any) => {
-          if (err) {
-            return res.status(404).json('Messages not found')
-          }
-          return res.json(messages)
-        })
+      const messages = await Message.aggregate([
+        {
+          $match: {
+            dialog: dialogId,
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'author',
+            foreignField: '_id',
+            as: 'author',
+          },
+        },
+        { $unwind: '$author' },
+        {
+          $project: {
+            id: '$_id',
+            _id: 0,
+            unread: 1,
+            text: 1,
+            dialog: 1,
+            createdAt: 1,
+            author: {
+              id: '$author._id',
+              name: '$author.fullName',
+              avatar: '$author.avatar',
+            },
+          },
+        },
+      ])
+
+      return res.json(messages)
     } catch (e) {
+      console.log(e)
       return res.status(500).json(e)
     }
   }

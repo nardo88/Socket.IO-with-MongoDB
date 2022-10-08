@@ -12,7 +12,6 @@ interface DialogItemProps {
 }
 
 const DialogList: FC<DialogItemProps> = ({ items, ownerId }) => {
-  console.log(items)
   return (
     <div className="main__dialogs dialogs">
       <div className="dialogs__header">

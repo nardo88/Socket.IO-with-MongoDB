@@ -1,3 +1,5 @@
+import api from '../../hooks/axios'
+
 const SET_MESSAGES = 'SET_MESSAGES'
 
 const initialState = {
@@ -20,3 +22,11 @@ export const setMessages = (data: any) => ({
   type: SET_MESSAGES,
   payload: data,
 })
+
+// THUNK
+export const getMeggages = (dialogId: string) => {
+  return async (dispatch: any) => {
+    const { data } = await api.get(`/messages/${dialogId}`)
+    dispatch(setMessages(data))
+  }
+}

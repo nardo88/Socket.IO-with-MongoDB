@@ -5,7 +5,7 @@ const SET_CURRENT_DIALOG = 'SET_CURRENT_DIALOG'
 
 const initialState = {
   items: [],
-  currentDialod: null,
+  currentDialog: null,
 }
 
 function dialogsReducer(state = initialState, action: any) {
@@ -13,7 +13,7 @@ function dialogsReducer(state = initialState, action: any) {
     case SET_DIALOGS:
       return { ...state, items: action.payload }
     case SET_CURRENT_DIALOG:
-      return { ...state, currentDialod: action.payload }
+      return { ...state, currentDialog: action.payload }
     default:
       return state
   }

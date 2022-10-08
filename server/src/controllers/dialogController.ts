@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import Dialogs from '../models/Dialogs'
 import socket from 'socket.io'
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 interface IRequest extends Request {
   user: {
@@ -15,7 +15,7 @@ class DialogController {
     this.io = io
   }
 
-  async add(req: IRequest, res: Response) {
+  add = async (req: IRequest, res: Response) => {
     // При создании диалога нужно создавать первое сообщение
     try {
       const { partner, lastMessage } = req.body
@@ -27,8 +27,10 @@ class DialogController {
       })
 
       await dialog.save()
+      this.io.emit('DIALOG_CREATED', dialog)
       res.json(dialog)
     } catch (e) {
+      console.log(e)
       return res.status(500).json(e)
     }
   }
@@ -48,8 +50,8 @@ class DialogController {
             from: 'users',
             localField: 'partner',
             foreignField: '_id',
-            as: 'partner' 
-          }
+            as: 'partner',
+          },
         },
         { $unwind: '$partner' },
         {
@@ -57,31 +59,33 @@ class DialogController {
             from: 'users',
             localField: 'author',
             foreignField: '_id',
-            as: 'author' 
-          }
-        },
-        {$unwind: '$author'},
-        {$project: {
-          id: '$_id',
-          _id: 0,
-          lastMessage: 1,
-          updatedAt: 1,
-          partner: {
-            id: '$partner._id',
-            name: '$partner.fullName',
-            avatar: '$partner.avatar',
+            as: 'author',
           },
-          author: {
-            id: '$author._id',
-            name: '$author.fullName',
-            avatar: '$author.avatar',
-          }
-        }}
+        },
+        { $unwind: '$author' },
+        {
+          $project: {
+            id: '$_id',
+            _id: 0,
+            lastMessage: 1,
+            updatedAt: 1,
+            partner: {
+              id: '$partner._id',
+              name: '$partner.fullName',
+              avatar: '$partner.avatar',
+            },
+            author: {
+              id: '$author._id',
+              name: '$author.fullName',
+              avatar: '$author.avatar',
+            },
+          },
+        },
       ])
 
       return res.json(dialogs)
     } catch (e) {
-      console.log(e);
+      console.log(e)
       return res.status(500).json(e)
     }
   }

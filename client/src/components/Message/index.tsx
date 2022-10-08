@@ -7,23 +7,19 @@ import AudioIcon from '../icons/Audio'
 import PauseIcon from '../icons/PauseIcon'
 import PlayIcon from '../icons/PlayIcon'
 import Avatar from '../Avatar'
+import { IMessage } from '../../types/Message'
 
 interface FileType {
   filename: string
   url: string
 }
 
-interface MessageProps {
-  user: {
-    _id: string
-    fullName: string
-    avatar: string | null | undefined
+interface MessageProps extends IMessage {
+  isMe?: boolean
 
-  }
   avatar?: string | null
   date?: string | number
   content: string | null
-  isMe?: boolean
   isRead?: boolean
   attachments?: FileType[]
   isTyping?: boolean
@@ -36,16 +32,16 @@ const convertCurrentTime = (number: number) => {
   return `${mins < 10 ? '0' : ''}${mins}:${Number(secs) < 10 ? '0' : ''}${secs}`
 }
 
-const Message: FC<MessageProps> = ({
-  content,
-  date,
+const Message = ({
   isMe,
+  createdAt,
+  text,
+  author,
   isRead,
   attachments,
   isTyping,
   audio,
-  user
-}) => {
+}: any) => {
   const [isPlay, setIsPlay] = useState(false)
   const ref = useRef<HTMLAudioElement>(null) as any
   const [progress, setProgress] = useState(0)
@@ -92,17 +88,18 @@ const Message: FC<MessageProps> = ({
       })
     }
   }, [audio])
+  console.log(isMe)
 
   return (
     <div className={`message ${isMe ? 'message--isme' : ''}`}>
       <div className="message__avatar">
-        <Avatar user={user} />
+        <Avatar user={author} />
       </div>
       <div className="message__content">
-        {content && (
+        {text && (
           <div
             className={isMe ? 'message__buble--isme' : 'message__buble--notme'}>
-            <p className="message__text">{content}</p>
+            <p className="message__text">{text}</p>
           </div>
         )}
         {audio && (
@@ -148,9 +145,9 @@ const Message: FC<MessageProps> = ({
         )}
         <div className="df aic mt4">
           {isMe && <span> {isRead ? <ReadIcon /> : <NotReadIcon />}</span>}
-          {date && (
+          {createdAt && (
             <span className={`message__date ${isMe && 'ml8'}`}>
-              {dayjs(date).format('DD.MM.YYYY')}
+              {dayjs(createdAt).format('DD.MM.YYYY')}
             </span>
           )}
         </div>

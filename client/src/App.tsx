@@ -13,7 +13,7 @@ function App() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
-    if(!isAuth){
+    if (!isAuth) {
       // @ts-ignore
       dispatch(fetchUserData())
     }
