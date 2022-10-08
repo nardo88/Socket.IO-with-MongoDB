@@ -55,7 +55,7 @@ const DialogItem: FC<DialogItemProps> = ({
       </div>
       <div className="dialog__info info">
         <div className="info__top">
-          <b>{partner.name}</b>
+          <b>{user.name}</b>
           <div className="info__date">{getDate(updatedAt)}</div>
         </div>
         <div className="info__bottom">
