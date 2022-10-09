@@ -45,8 +45,9 @@ const DialogItem: FC<DialogItemProps> = ({
 }) => {
   const user = getUser(currentUserId, partner, author)
   const dispatch = useDispatch()
+
   return (
-    <div className="dialog" onClick={() => dispatch(setCurrentDialog(id))}>
+    <div className={`dialog ${''}`} onClick={() => dispatch(setCurrentDialog(id, user))}>
       <div
         className={`dialog__avatar ${
           user?.isOnline ? 'dialog__avatar--online' : ''

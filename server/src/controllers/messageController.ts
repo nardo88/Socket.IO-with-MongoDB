@@ -15,9 +15,8 @@ class MessageController {
     try {
       // @ts-ignore
       const author = req.user.id
-      const { dialogId } = req.params
 
-      const { text } = req.body
+      const { text, dialogId } = req.body
       const message = new Message({
         _id: v4(),
         text,

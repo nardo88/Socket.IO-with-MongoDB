@@ -18,3 +18,8 @@ export interface IDialogItem {
     lastMessage: ILastMessage
     updatedAt: Date
 }
+
+export interface ICurrentDialog {
+    dialogId: string
+    user: IMember 
+}

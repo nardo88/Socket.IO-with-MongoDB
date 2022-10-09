@@ -18,7 +18,7 @@ const DialogsPage = () => {
     // @ts-ignore
     dispatch(fetchDialogs())
 
-    socket.on('DIALOG_CREATED', ({ author, partner }) => {
+    socket.on('DIALOG_CREATED', ({ author, partner }: {author: string, partner: string}) => {
       if (ownId === author || ownId === partner) {
         // @ts-ignore
         dispatch(fetchDialogs())

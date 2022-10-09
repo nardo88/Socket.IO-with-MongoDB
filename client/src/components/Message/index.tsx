@@ -7,23 +7,12 @@ import AudioIcon from '../icons/Audio'
 import PauseIcon from '../icons/PauseIcon'
 import PlayIcon from '../icons/PlayIcon'
 import Avatar from '../Avatar'
-import { IMessage } from '../../types/Message'
+import { FileType, IMessage } from '../../types/Message'
 
-interface FileType {
-  filename: string
-  url: string
-}
+
 
 interface MessageProps extends IMessage {
   isMe?: boolean
-
-  avatar?: string | null
-  date?: string | number
-  content: string | null
-  isRead?: boolean
-  attachments?: FileType[]
-  isTyping?: boolean
-  audio?: string | null | undefined
 }
 
 const convertCurrentTime = (number: number) => {
@@ -32,16 +21,16 @@ const convertCurrentTime = (number: number) => {
   return `${mins < 10 ? '0' : ''}${mins}:${Number(secs) < 10 ? '0' : ''}${secs}`
 }
 
-const Message = ({
+const Message:FC<MessageProps> = ({
   isMe,
   createdAt,
   text,
   author,
-  isRead,
   attachments,
   isTyping,
   audio,
-}: any) => {
+  unread,
+}) => {
   const [isPlay, setIsPlay] = useState(false)
   const ref = useRef<HTMLAudioElement>(null) as any
   const [progress, setProgress] = useState(0)
@@ -88,7 +77,6 @@ const Message = ({
       })
     }
   }, [audio])
-  console.log(isMe)
 
   return (
     <div className={`message ${isMe ? 'message--isme' : ''}`}>
@@ -144,7 +132,7 @@ const Message = ({
           </div>
         )}
         <div className="df aic mt4">
-          {isMe && <span> {isRead ? <ReadIcon /> : <NotReadIcon />}</span>}
+          {isMe && <span> {unread ? <ReadIcon /> : <NotReadIcon />}</span>}
           {createdAt && (
             <span className={`message__date ${isMe && 'ml8'}`}>
               {dayjs(createdAt).format('DD.MM.YYYY')}

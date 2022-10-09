@@ -1,4 +1,5 @@
 import api from '../../hooks/axios'
+import { IMember } from '../../types/Dialog'
 
 const SET_DIALOGS = 'SET_DIALOGS'
 const SET_CURRENT_DIALOG = 'SET_CURRENT_DIALOG'
@@ -27,9 +28,9 @@ export const setItems = (data: any) => ({
   payload: data,
 })
 
-export const setCurrentDialog = (data: string) => ({
+export const setCurrentDialog = (dialogId: string, user: IMember) => ({
   type: SET_CURRENT_DIALOG,
-  payload: data,
+  payload: {dialogId, user},
 })
 
 // THUNKS
