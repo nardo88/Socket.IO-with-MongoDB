@@ -4,6 +4,7 @@ import { Input } from 'antd'
 import GroupIcon from '../icons/GroupIcon'
 import WriteIcon from '../icons/WriteIcon'
 import { IDialogItem } from '../../types/Dialog'
+import { useSelector } from 'react-redux'
 const { Search } = Input
 
 interface DialogItemProps {
@@ -12,6 +13,7 @@ interface DialogItemProps {
 }
 
 const DialogList: FC<DialogItemProps> = ({ items, ownerId }) => {
+  const currentDialog = useSelector((state: any) => state.dialogs.currentDialog)
   return (
     <div className="main__dialogs dialogs">
       <div className="dialogs__header">
@@ -37,6 +39,7 @@ const DialogList: FC<DialogItemProps> = ({ items, ownerId }) => {
             key={item.id}
             isMe={item.lastMessage.userId === ownerId}
             currentUserId={ownerId}
+            currentDialog={currentDialog}
             {...item}
           />
         ))}

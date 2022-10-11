@@ -30,6 +30,7 @@ const Message:FC<MessageProps> = ({
   isTyping,
   audio,
   unread,
+  
 }) => {
   const [isPlay, setIsPlay] = useState(false)
   const ref = useRef<HTMLAudioElement>(null) as any

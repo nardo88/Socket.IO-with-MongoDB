@@ -4,7 +4,7 @@ export interface IMessage {
     fullName: string
     avatar: string | null | undefined
   }
-  id: string
+  _id: string
   dialog: string
   text: string
   unread: boolean

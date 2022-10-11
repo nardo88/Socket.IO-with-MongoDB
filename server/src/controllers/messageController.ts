@@ -4,6 +4,7 @@ import Message from '../models/Message'
 import socket from 'socket.io'
 import Dialogs from '../models/Dialogs'
 import { v4 } from 'uuid'
+import User from '../models/User'
 
 class MessageController {
   io: socket.Server
@@ -17,17 +18,36 @@ class MessageController {
       const author = req.user.id
 
       const { text, dialogId } = req.body
-      const message = new Message({
+      const message: any = new Message({
         _id: v4(),
         text,
         dialog: dialogId,
         author,
       })
-      const dialog = await Dialogs.findById(dialogId)
+      const dialog = await Dialogs.findOne({ _id: dialogId })
+      if (dialog) {
+        dialog.lastMessage = {
+          userId: author,
+          message: text,
+          readed: false,
+        }
+      }
+
+      dialog?.save()
+
+      const autorProfile = await User.findOne({ _id: author })
       await message.save()
-      this.io.emit('NEW_MESSAGE', message)
+      this.io.emit('NEW_MESSAGE', {
+        ...message?._doc,
+        author: {
+          avatar: autorProfile?.avatar || '',
+          id: author,
+          name: autorProfile?.fullName,
+        },
+      })
       res.json({ message, dialog })
     } catch (e) {
+      console.log(e)
       return res.status(500).json(e)
     }
   }
@@ -53,8 +73,7 @@ class MessageController {
         { $unwind: '$author' },
         {
           $project: {
-            id: '$_id',
-            _id: 0,
+            _id: 1,
             unread: 1,
             text: 1,
             dialog: 1,

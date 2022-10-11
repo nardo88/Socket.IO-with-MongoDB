@@ -7,13 +7,14 @@ import dayjs from 'dayjs'
 import Avatar from '../Avatar'
 import { useDispatch } from 'react-redux'
 import { setCurrentDialog } from '../../redux/reducers/dialogs'
-import { IDialogItem, IMember } from '../../types/Dialog'
+import { ICurrentDialog, IDialogItem, IMember } from '../../types/Dialog'
 const isToday = require('dayjs/plugin/isToday')
 dayjs.extend(isToday)
 
 interface DialogItemProps extends IDialogItem {
   isMe: boolean
   currentUserId: string
+  currentDialog: ICurrentDialog
 }
 
 const getUser = (
@@ -42,12 +43,13 @@ const DialogItem: FC<DialogItemProps> = ({
   id,
   currentUserId,
   updatedAt,
+  currentDialog
 }) => {
   const user = getUser(currentUserId, partner, author)
   const dispatch = useDispatch()
 
   return (
-    <div className={`dialog ${''}`} onClick={() => dispatch(setCurrentDialog(id, user))}>
+    <div className={`dialog ${id === currentDialog?.dialogId && 'dialog__active' }`} onClick={() => dispatch(setCurrentDialog(id, user))}>
       <div
         className={`dialog__avatar ${
           user?.isOnline ? 'dialog__avatar--online' : ''

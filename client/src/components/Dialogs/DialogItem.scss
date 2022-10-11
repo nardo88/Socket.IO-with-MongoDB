@@ -47,13 +47,17 @@
         border-radius: 50%;
       }
     }
+
+    &__active{
+      background:$lightGray;
+    }
 }
 
 .info {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  width: 80%;
   &__top {
     display: flex;
     align-items: center;

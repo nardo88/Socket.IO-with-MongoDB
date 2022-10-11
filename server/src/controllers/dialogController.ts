@@ -45,6 +45,9 @@ class DialogController {
             $or: [{ partner: userId }, { author: userId }],
           },
         },
+        {$sort : {
+          updatedAt: -1
+        }},
         {
           $lookup: {
             from: 'users',
